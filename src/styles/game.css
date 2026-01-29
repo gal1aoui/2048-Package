@@ -1,0 +1,644 @@
+/* ============================================
+          @agallaoui/2048 - 2048 Game
+   ============================================ 
+*/
+
+/* CSS Custom Properties */
+:root {
+  --game2048-bg: #faf8ef;
+  --game2048-board-bg: #bbada0;
+  --game2048-tile-empty: rgba(238, 228, 218, 0.35);
+  --game2048-text-dark: #776e65;
+  --game2048-text-light: #f9f6f2;
+  --game2048-button-bg: #8f7a66;
+  --game2048-button-hover: #9f8b77;
+  --game2048-tile-2: #eee4da;
+  --game2048-tile-4: #ede0c8;
+  --game2048-tile-8: #f2b179;
+  --game2048-tile-16: #f59563;
+  --game2048-tile-32: #f67c5f;
+  --game2048-tile-64: #f65e3b;
+  --game2048-tile-128: #edcf72;
+  --game2048-tile-256: #edcc61;
+  --game2048-tile-512: #edc850;
+  --game2048-tile-1024: #edc53f;
+  --game2048-tile-2048: #edc22e;
+  --game2048-tile-super: #3c3a32;
+}
+
+/* Container */
+.game2048-container {
+  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 15px;
+  background: var(--game2048-bg);
+  border-radius: 10px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ============================================
+   Start Screen
+   ============================================ */
+
+.game2048-start-screen {
+  text-align: center;
+  padding: 20px;
+}
+
+.game2048-title {
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--game2048-text-dark);
+  margin: 0 0 10px;
+}
+
+.game2048-subtitle {
+  font-size: 1.2rem;
+  color: var(--game2048-text-dark);
+  margin: 0 0 30px;
+  opacity: 0.8;
+}
+
+.game2048-start-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 300px;
+  margin: 0 auto 30px;
+}
+
+.game2048-name-input {
+  padding: 15px;
+  font-size: 1.1rem;
+  border: 2px solid var(--game2048-board-bg);
+  border-radius: 8px;
+  outline: none;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.game2048-name-input:focus {
+  border-color: var(--game2048-button-bg);
+}
+
+.game2048-start-button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--game2048-text-light);
+  background: var(--game2048-button-bg);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.game2048-start-button:hover {
+  background: var(--game2048-button-hover);
+}
+
+.game2048-start-button:active {
+  transform: scale(0.98);
+}
+
+/* High Scores */
+.game2048-high-scores {
+  margin: 30px 0;
+  padding: 20px;
+  background: rgba(187, 173, 160, 0.2);
+  border-radius: 8px;
+}
+
+.game2048-high-scores h3 {
+  margin: 0 0 15px;
+  color: var(--game2048-text-dark);
+  font-size: 1.3rem;
+}
+
+.game2048-scores-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game2048-score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid rgba(187, 173, 160, 0.3);
+}
+
+.game2048-score-item:last-child {
+  border-bottom: none;
+}
+
+.game2048-score-rank {
+  font-weight: bold;
+  color: var(--game2048-button-bg);
+  width: 40px;
+}
+
+.game2048-score-name {
+  flex: 1;
+  text-align: left;
+  color: var(--game2048-text-dark);
+}
+
+.game2048-score-value {
+  font-weight: bold;
+  color: var(--game2048-text-dark);
+}
+
+/* Instructions */
+.game2048-instructions {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(187, 173, 160, 0.1);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--game2048-text-dark);
+  line-height: 1.6;
+}
+
+.game2048-instructions p {
+  margin: 5px 0;
+}
+
+/* ============================================
+   Score Board
+   ============================================ */
+
+.game2048-scoreboard {
+  margin-bottom: 15px;
+}
+
+.game2048-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.game2048-logo {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--game2048-text-dark);
+  margin: 0;
+}
+
+.game2048-scores {
+  display: flex;
+  gap: 10px;
+}
+
+.game2048-score-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  padding: 8px 15px;
+  background: var(--game2048-board-bg);
+  border-radius: 6px;
+}
+
+.game2048-score-label {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #eee4da;
+  text-transform: uppercase;
+}
+
+.game2048-score-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.game2048-info-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.game2048-player-name {
+  font-size: 0.95rem;
+  color: var(--game2048-text-dark);
+  font-weight: 500;
+}
+
+.game2048-new-game-button {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--game2048-text-light);
+  background: var(--game2048-button-bg);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.game2048-new-game-button:hover {
+  background: var(--game2048-button-hover);
+}
+
+/* ============================================
+   Game Board
+   ============================================ */
+
+.game2048-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px;
+  background: var(--game2048-board-bg);
+  border-radius: 8px;
+  aspect-ratio: 1;
+}
+
+/* ============================================
+   Tiles
+   ============================================ */
+
+.game2048-tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--game2048-tile-empty);
+  border-radius: 6px;
+  transition: transform 0.1s ease-in-out;
+}
+
+.game2048-tile-empty {
+  background: var(--game2048-tile-empty);
+}
+
+.game2048-tile-value {
+  font-weight: bold;
+  font-size: clamp(1.5rem, 8vmin, 3rem);
+}
+
+/* Tile Colors */
+.game2048-tile-2 {
+  background: var(--game2048-tile-2);
+  color: var(--game2048-text-dark);
+  animation: tile-appear 0.15s ease-out;
+}
+
+.game2048-tile-4 {
+  background: var(--game2048-tile-4);
+  color: var(--game2048-text-dark);
+  animation: tile-appear 0.15s ease-out;
+}
+
+.game2048-tile-8 {
+  background: var(--game2048-tile-8);
+  color: var(--game2048-text-light);
+  animation: tile-appear 0.15s ease-out;
+}
+
+.game2048-tile-16 {
+  background: var(--game2048-tile-16);
+  color: var(--game2048-text-light);
+  animation: tile-appear 0.15s ease-out;
+}
+
+.game2048-tile-32 {
+  background: var(--game2048-tile-32);
+  color: var(--game2048-text-light);
+  animation: tile-appear 0.15s ease-out;
+}
+
+.game2048-tile-64 {
+  background: var(--game2048-tile-64);
+  color: var(--game2048-text-light);
+  animation: tile-appear 0.15s ease-out;
+}
+
+.game2048-tile-128 {
+  background: var(--game2048-tile-128);
+  color: var(--game2048-text-light);
+  animation: tile-merge 0.2s ease-out;
+}
+
+.game2048-tile-256 {
+  background: var(--game2048-tile-256);
+  color: var(--game2048-text-light);
+  animation: tile-merge 0.2s ease-out;
+}
+
+.game2048-tile-512 {
+  background: var(--game2048-tile-512);
+  color: var(--game2048-text-light);
+  animation: tile-merge 0.2s ease-out;
+}
+
+.game2048-tile-1024 {
+  background: var(--game2048-tile-1024);
+  color: var(--game2048-text-light);
+  animation: tile-merge 0.2s ease-out;
+}
+
+.game2048-tile-1024 .game2048-tile-value {
+  font-size: clamp(1.2rem, 6vmin, 2.5rem);
+}
+
+.game2048-tile-2048 {
+  background: var(--game2048-tile-2048);
+  color: var(--game2048-text-light);
+  animation: tile-win 0.3s ease-out;
+  box-shadow: 0 0 30px 10px rgba(237, 194, 46, 0.5);
+}
+
+.game2048-tile-2048 .game2048-tile-value {
+  font-size: clamp(1.2rem, 6vmin, 2.5rem);
+}
+
+.game2048-tile-super {
+  background: var(--game2048-tile-super);
+  color: var(--game2048-text-light);
+  animation: tile-merge 0.2s ease-out;
+}
+
+.game2048-tile-super .game2048-tile-value {
+  font-size: clamp(1rem, 5vmin, 2rem);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+
+@keyframes tile-appear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes tile-merge {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes tile-win {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.2);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  75% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes popup-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes overlay-fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   Popups (Win / Game Over)
+   ============================================ */
+
+.game2048-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(250, 248, 239, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: overlay-fade 0.3s ease-out;
+}
+
+.game2048-popup {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: popup-appear 0.3s ease-out;
+  max-width: 90%;
+  width: 350px;
+}
+
+.game2048-popup-title {
+  font-size: 2.5rem;
+  color: #edc22e;
+  margin: 0 0 15px;
+}
+
+.game2048-popup-gameover .game2048-popup-title {
+  color: var(--game2048-tile-64);
+}
+
+.game2048-popup-message {
+  font-size: 1.1rem;
+  color: var(--game2048-text-dark);
+  margin: 0 0 10px;
+}
+
+.game2048-popup-score {
+  font-size: 1.3rem;
+  color: var(--game2048-text-dark);
+  margin: 0 0 25px;
+}
+
+.game2048-popup-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.game2048-continue-button,
+.game2048-restart-button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.game2048-continue-button {
+  background: #edc22e;
+  color: white;
+}
+
+.game2048-continue-button:hover {
+  background: #d4af37;
+}
+
+.game2048-restart-button {
+  background: var(--game2048-button-bg);
+  color: white;
+}
+
+.game2048-restart-button:hover {
+  background: var(--game2048-button-hover);
+}
+
+.game2048-continue-button:active,
+.game2048-restart-button:active {
+  transform: scale(0.98);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 520px) {
+  .game2048-container {
+    padding: 10px;
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  .game2048-title {
+    font-size: 3.5rem;
+  }
+
+  .game2048-logo {
+    font-size: 2.2rem;
+  }
+
+  .game2048-score-box {
+    min-width: 65px;
+    padding: 6px 10px;
+  }
+
+  .game2048-score-number {
+    font-size: 1.2rem;
+  }
+
+  .game2048-board {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .game2048-tile {
+    border-radius: 4px;
+  }
+
+  .game2048-popup {
+    padding: 30px;
+    width: 300px;
+  }
+
+  .game2048-popup-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .game2048-board {
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .game2048-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .game2048-scores {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .game2048-container {
+    background: #1a1a2e;
+  }
+
+  .game2048-title,
+  .game2048-logo,
+  .game2048-subtitle,
+  .game2048-player-name,
+  .game2048-instructions {
+    color: #e0e0e0;
+  }
+
+  .game2048-high-scores {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .game2048-high-scores h3,
+  .game2048-score-item {
+    color: #e0e0e0;
+  }
+
+  .game2048-name-input {
+    background: #2a2a4a;
+    color: #e0e0e0;
+    border-color: #3a3a5a;
+  }
+
+  .game2048-popup-overlay {
+    background: rgba(26, 26, 46, 0.9);
+  }
+
+  .game2048-popup {
+    background: #2a2a4a;
+  }
+
+  .game2048-popup-message,
+  .game2048-popup-score {
+    color: #e0e0e0;
+  }
+}
