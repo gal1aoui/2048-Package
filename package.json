@@ -1,5 +1,6 @@
 {
-  "name": "@agallaoui/2048",
+  "name": "@agallaoui/game-2048",
+  "private": false,
   "version": "1.0.0",
   "description": "A lightweight, zero-dependency 2048 game React component",
   "main": "dist/index.js",

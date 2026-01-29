@@ -1,4 +1,4 @@
-# @agallaoui/2048
+# @agallaoui/game-2048
 
 A lightweight, zero-dependency 2048 game React component.
 
@@ -17,14 +17,14 @@ A lightweight, zero-dependency 2048 game React component.
 ## Installation
 
 ```bash
-npm install @agallaoui/2048
+npm install @agallaoui/game-2048
 ```
 
 ## Usage
 
 ```jsx
-import { Game2048 } from '@agallaoui/2048';
-import '@agallaoui/2048/styles.css';
+import { Game2048 } from '@agallaoui/game-2048';
+import '@agallaoui/game-2048/styles.css';
 
 function App() {
   return (
@@ -131,8 +131,8 @@ You can customize the appearance by overriding CSS custom properties:
 This package includes TypeScript type definitions.
 
 ```typescript
-import { Game2048 } from '@agallaoui/2048';
-import type { GameState, ScoreEntry } from '@agallaoui/2048';
+import { Game2048 } from '@agallaoui/game-2048';
+import type { GameState, ScoreEntry } from '@agallaoui/game-2048';
 ```
 
 ## Browser Support
