@@ -27,10 +27,54 @@ import { Game2048 } from '@agallaoui/2048';
 import '@agallaoui/2048/styles.css';
 
 function App() {
-  return <Game2048 />;
+  return (
+    <Game2048
+      buttonText="Play 2048"
+      buttonPosition={{ bottom: 20, right: 20 }}
+      gamePosition={{ bottom: 80, right: 20 }}
+      showCloseButton={true}
+    />
+  );
 }
 
 export default App;
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `buttonText` | `string` | `"Play 2048"` | Text displayed on the trigger button |
+| `buttonPosition` | `Position` | `{ bottom: 20, right: 20 }` | Position of the trigger button |
+| `gamePosition` | `Position` | `{ bottom: 80, right: 20 }` | Position of the game panel when open |
+| `buttonClassName` | `string` | - | Custom class for the trigger button |
+| `showCloseButton` | `boolean` | `true` | Whether to show close button on game panel |
+| `defaultOpen` | `boolean` | `false` | Start with game already open |
+| `onOpen` | `() => void` | - | Callback when game is opened |
+| `onClose` | `() => void` | - | Callback when game is closed |
+
+### Position Type
+
+```ts
+interface Position {
+  top?: string | number;
+  right?: string | number;
+  bottom?: string | number;
+  left?: string | number;
+}
+```
+
+### Example Positions
+
+```jsx
+// Bottom right (default)
+<Game2048 buttonPosition={{ bottom: 20, right: 20 }} />
+
+// Top left
+<Game2048 buttonPosition={{ top: 20, left: 20 }} gamePosition={{ top: 80, left: 20 }} />
+
+// Center bottom
+<Game2048 buttonPosition={{ bottom: 20, left: '50%' }} />
 ```
 
 ## How to Play

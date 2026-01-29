@@ -1,7 +1,6 @@
 /* ============================================
-          @agallaoui/2048 - 2048 Game
-   ============================================ 
-*/
+   @agallaoui/2048 - 2048 Game
+   ============================================ */
 
 /* CSS Custom Properties */
 :root {
@@ -24,19 +23,81 @@
   --game2048-tile-1024: #edc53f;
   --game2048-tile-2048: #edc22e;
   --game2048-tile-super: #3c3a32;
+  --game2048-tile-size: 80px;
+  --game2048-tile-gap: 10px;
+}
+
+/* Trigger Button */
+.game2048-trigger-button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--game2048-text-light);
+  background: linear-gradient(135deg, #edc22e 0%, #f59563 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(237, 194, 46, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.game2048-trigger-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(237, 194, 46, 0.5);
+}
+
+.game2048-trigger-button:active {
+  transform: translateY(0);
+}
+
+/* Wrapper for absolute positioning */
+.game2048-wrapper {
+  position: fixed;
+  z-index: 9999;
+}
+
+.game2048-wrapper-inline {
+  position: relative;
 }
 
 /* Container */
 .game2048-container {
   font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
-  max-width: 500px;
-  margin: 0 auto;
+  width: calc(var(--game2048-tile-size) * 4 + var(--game2048-tile-gap) * 5 + 30px);
   padding: 15px;
   background: var(--game2048-bg);
   border-radius: 10px;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Close Button */
+.game2048-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1;
+  color: var(--game2048-text-dark);
+  background: rgba(187, 173, 160, 0.3);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game2048-close-button:hover {
+  background: rgba(187, 173, 160, 0.5);
 }
 
 /* ============================================
@@ -45,34 +106,33 @@
 
 .game2048-start-screen {
   text-align: center;
-  padding: 20px;
+  padding: 20px 10px;
 }
 
 .game2048-title {
-  font-size: 5rem;
+  font-size: 3rem;
   font-weight: bold;
   color: var(--game2048-text-dark);
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 
 .game2048-subtitle {
-  font-size: 1.2rem;
+  font-size: 0.95rem;
   color: var(--game2048-text-dark);
-  margin: 0 0 30px;
+  margin: 0 0 20px;
   opacity: 0.8;
 }
 
 .game2048-start-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  max-width: 300px;
-  margin: 0 auto 30px;
+  gap: 12px;
+  margin: 0 auto 20px;
 }
 
 .game2048-name-input {
-  padding: 15px;
-  font-size: 1.1rem;
+  padding: 12px;
+  font-size: 1rem;
   border: 2px solid var(--game2048-board-bg);
   border-radius: 8px;
   outline: none;
@@ -85,8 +145,8 @@
 }
 
 .game2048-start-button {
-  padding: 15px 30px;
-  font-size: 1.2rem;
+  padding: 12px 20px;
+  font-size: 1rem;
   font-weight: bold;
   color: var(--game2048-text-light);
   background: var(--game2048-button-bg);
@@ -106,16 +166,16 @@
 
 /* High Scores */
 .game2048-high-scores {
-  margin: 30px 0;
-  padding: 20px;
+  margin: 20px 0;
+  padding: 15px;
   background: rgba(187, 173, 160, 0.2);
   border-radius: 8px;
 }
 
 .game2048-high-scores h3 {
-  margin: 0 0 15px;
+  margin: 0 0 12px;
   color: var(--game2048-text-dark);
-  font-size: 1.3rem;
+  font-size: 1.1rem;
 }
 
 .game2048-scores-list {
@@ -128,8 +188,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 8px;
   border-bottom: 1px solid rgba(187, 173, 160, 0.3);
+  font-size: 0.9rem;
 }
 
 .game2048-score-item:last-child {
@@ -139,7 +200,7 @@
 .game2048-score-rank {
   font-weight: bold;
   color: var(--game2048-button-bg);
-  width: 40px;
+  width: 30px;
 }
 
 .game2048-score-name {
@@ -155,17 +216,17 @@
 
 /* Instructions */
 .game2048-instructions {
-  margin-top: 20px;
-  padding: 15px;
+  margin-top: 15px;
+  padding: 12px;
   background: rgba(187, 173, 160, 0.1);
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: var(--game2048-text-dark);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .game2048-instructions p {
-  margin: 5px 0;
+  margin: 4px 0;
 }
 
 /* ============================================
@@ -173,18 +234,18 @@
    ============================================ */
 
 .game2048-scoreboard {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .game2048-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .game2048-logo {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   color: var(--game2048-text-dark);
   margin: 0;
@@ -192,28 +253,28 @@
 
 .game2048-scores {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .game2048-score-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 80px;
-  padding: 8px 15px;
+  min-width: 60px;
+  padding: 6px 12px;
   background: var(--game2048-board-bg);
   border-radius: 6px;
 }
 
 .game2048-score-label {
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: bold;
   color: #eee4da;
   text-transform: uppercase;
 }
 
 .game2048-score-number {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: white;
 }
@@ -225,14 +286,14 @@
 }
 
 .game2048-player-name {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: var(--game2048-text-dark);
   font-weight: 500;
 }
 
 .game2048-new-game-button {
-  padding: 10px 20px;
-  font-size: 0.9rem;
+  padding: 8px 14px;
+  font-size: 0.8rem;
   font-weight: bold;
   color: var(--game2048-text-light);
   background: var(--game2048-button-bg);
@@ -247,27 +308,31 @@
 }
 
 /* ============================================
-   Game Board
+   Game Board - Fixed Size
    ============================================ */
 
 .game2048-board {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  padding: 10px;
+  grid-template-columns: repeat(4, var(--game2048-tile-size));
+  grid-template-rows: repeat(4, var(--game2048-tile-size));
+  gap: var(--game2048-tile-gap);
+  padding: var(--game2048-tile-gap);
   background: var(--game2048-board-bg);
   border-radius: 8px;
-  aspect-ratio: 1;
+  width: calc(var(--game2048-tile-size) * 4 + var(--game2048-tile-gap) * 5);
+  height: calc(var(--game2048-tile-size) * 4 + var(--game2048-tile-gap) * 5);
 }
 
 /* ============================================
-   Tiles
+   Tiles - Fixed Size
    ============================================ */
 
 .game2048-tile {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: var(--game2048-tile-size);
+  height: var(--game2048-tile-size);
   background: var(--game2048-tile-empty);
   border-radius: 6px;
   transition: transform 0.1s ease-in-out;
@@ -279,7 +344,7 @@
 
 .game2048-tile-value {
   font-weight: bold;
-  font-size: clamp(1.5rem, 8vmin, 3rem);
+  font-size: 2rem;
 }
 
 /* Tile Colors */
@@ -325,16 +390,28 @@
   animation: tile-merge 0.2s ease-out;
 }
 
+.game2048-tile-128 .game2048-tile-value {
+  font-size: 1.8rem;
+}
+
 .game2048-tile-256 {
   background: var(--game2048-tile-256);
   color: var(--game2048-text-light);
   animation: tile-merge 0.2s ease-out;
 }
 
+.game2048-tile-256 .game2048-tile-value {
+  font-size: 1.8rem;
+}
+
 .game2048-tile-512 {
   background: var(--game2048-tile-512);
   color: var(--game2048-text-light);
   animation: tile-merge 0.2s ease-out;
+}
+
+.game2048-tile-512 .game2048-tile-value {
+  font-size: 1.8rem;
 }
 
 .game2048-tile-1024 {
@@ -344,7 +421,7 @@
 }
 
 .game2048-tile-1024 .game2048-tile-value {
-  font-size: clamp(1.2rem, 6vmin, 2.5rem);
+  font-size: 1.5rem;
 }
 
 .game2048-tile-2048 {
@@ -355,7 +432,7 @@
 }
 
 .game2048-tile-2048 .game2048-tile-value {
-  font-size: clamp(1.2rem, 6vmin, 2.5rem);
+  font-size: 1.5rem;
 }
 
 .game2048-tile-super {
@@ -365,7 +442,7 @@
 }
 
 .game2048-tile-super .game2048-tile-value {
-  font-size: clamp(1rem, 5vmin, 2rem);
+  font-size: 1.3rem;
 }
 
 /* ============================================
@@ -442,39 +519,56 @@
   }
 }
 
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game2048-container {
+  animation: slide-in 0.3s ease-out;
+}
+
 /* ============================================
    Popups (Win / Game Over)
    ============================================ */
 
 .game2048-popup-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(250, 248, 239, 0.85);
+  background: rgba(250, 248, 239, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 10;
+  border-radius: 10px;
   animation: overlay-fade 0.3s ease-out;
 }
 
 .game2048-popup {
   background: white;
-  padding: 40px;
+  padding: 30px;
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   animation: popup-appear 0.3s ease-out;
   max-width: 90%;
-  width: 350px;
+  width: 280px;
 }
 
 .game2048-popup-title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #edc22e;
-  margin: 0 0 15px;
+  margin: 0 0 12px;
 }
 
 .game2048-popup-gameover .game2048-popup-title {
@@ -482,27 +576,27 @@
 }
 
 .game2048-popup-message {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--game2048-text-dark);
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 
 .game2048-popup-score {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: var(--game2048-text-dark);
-  margin: 0 0 25px;
+  margin: 0 0 20px;
 }
 
 .game2048-popup-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .game2048-continue-button,
 .game2048-restart-button {
-  padding: 15px 30px;
-  font-size: 1.1rem;
+  padding: 12px 24px;
+  font-size: 1rem;
   font-weight: bold;
   border: none;
   border-radius: 8px;
@@ -534,69 +628,47 @@
 }
 
 /* ============================================
-   Responsive Design
+   Responsive - Smaller tiles on mobile
    ============================================ */
 
-@media (max-width: 520px) {
+@media (max-width: 420px) {
+  :root {
+    --game2048-tile-size: 65px;
+    --game2048-tile-gap: 8px;
+  }
+
   .game2048-container {
     padding: 10px;
-    max-width: 100%;
-    border-radius: 0;
-    min-height: 100vh;
-    box-sizing: border-box;
   }
 
   .game2048-title {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
   }
 
-  .game2048-logo {
-    font-size: 2.2rem;
+  .game2048-tile-value {
+    font-size: 1.6rem;
   }
 
-  .game2048-score-box {
-    min-width: 65px;
-    padding: 6px 10px;
+  .game2048-tile-128 .game2048-tile-value,
+  .game2048-tile-256 .game2048-tile-value,
+  .game2048-tile-512 .game2048-tile-value {
+    font-size: 1.4rem;
   }
 
-  .game2048-score-number {
+  .game2048-tile-1024 .game2048-tile-value,
+  .game2048-tile-2048 .game2048-tile-value {
     font-size: 1.2rem;
   }
 
-  .game2048-board {
-    gap: 8px;
-    padding: 8px;
-  }
-
-  .game2048-tile {
-    border-radius: 4px;
-  }
-
-  .game2048-popup {
-    padding: 30px;
-    width: 300px;
-  }
-
-  .game2048-popup-title {
-    font-size: 2rem;
+  .game2048-tile-super .game2048-tile-value {
+    font-size: 1rem;
   }
 }
 
-@media (max-width: 360px) {
-  .game2048-board {
-    gap: 6px;
-    padding: 6px;
-  }
-
-  .game2048-header {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-  }
-
-  .game2048-scores {
-    width: 100%;
-    justify-content: center;
+@media (max-width: 340px) {
+  :root {
+    --game2048-tile-size: 55px;
+    --game2048-tile-gap: 6px;
   }
 }
 
@@ -630,7 +702,7 @@
   }
 
   .game2048-popup-overlay {
-    background: rgba(26, 26, 46, 0.9);
+    background: rgba(26, 26, 46, 0.95);
   }
 
   .game2048-popup {
@@ -640,5 +712,14 @@
   .game2048-popup-message,
   .game2048-popup-score {
     color: #e0e0e0;
+  }
+
+  .game2048-close-button {
+    color: #e0e0e0;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .game2048-close-button:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
 }

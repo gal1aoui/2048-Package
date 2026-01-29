@@ -6,8 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@agallaoui/2048': path.resolve(__dirname, '../src/index.ts'),
-      '@agallaoui/2048/styles.css': path.resolve(__dirname, '../src/styles/game.css')
+      '@agallaoui/2048': path.resolve(__dirname, '../src/index.ts')
     }
   }
 });
